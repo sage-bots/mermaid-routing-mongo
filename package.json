@@ -1,0 +1,23 @@
+{
+  "name": "@sagebots/mermaid-routing-mongo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tom Kornblit <tom.kornblit@gmail.com> (http://blog.tomkornblit.com)",
+  "license": "ISC",
+  "dependencies": {
+    "feathers-hooks": "^1.5.6",
+    "feathers-mongoose": "^3.5.1",
+    "mongoose": "^4.5.9",
+    "q": "^1.4.1",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.2.2",
+    "eslint-plugin-react": "^6.0.0"
+  }
+}
