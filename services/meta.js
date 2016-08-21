@@ -3,8 +3,7 @@ var hooks = require("feathers-hooks");
 
 require('../models/meta');
 
-module.exports = function() {
-    const app = this;
+module.exports = function(app) {
 
     app.use('/v1/meta', service({
         name: 'meta',

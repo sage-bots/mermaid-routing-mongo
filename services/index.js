@@ -1,9 +1,7 @@
-const meta = require('./meta');
+const metaService = require('./meta');
 
-module.exports = function() {
+module.exports = function(app) {
 
-    const app = this;
-
-    app.configure(meta);
+    metaService.call(this, app);
 
 };

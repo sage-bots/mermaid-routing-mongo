@@ -3,22 +3,22 @@ var services = require("./services");
 var Q = require("q");
 var logger = require("./logger");
 
-var mongoGetDataByURI = function() {
+var mongoGetDataByURI = function(app) {
 
-    var nativeGetter = this.mermaid.getDataByURI;
+    var mermaidGetter = app.mermaid.getDataByURI;
 
     return function(uri) {
 
         var deferred = Q.defer();
 
-        this.service("/v1/meta").get(uri).then((data) => {
+        app.service("/v1/meta").get(uri).then((data) => {
 
             deferred.resolve(data);
 
         }).catch((_) => {
 
-            if (nativeGetter(uri)) {
-                var data = nativeGetter(uri);
+            if (mermaidGetter(uri)) {
+                var data = mermaidGetter(uri);
                 deferred.resolve(data);
             } else {
                 deferred.reject("No data with that uri");
@@ -29,22 +29,22 @@ var mongoGetDataByURI = function() {
         return deferred.promise;
 
 
-    }.bind(this);
+    };
 
 }
 
 var routingMongo = function(config) {
 
     return {
-        setup: function() {
+        setup: function(app) {
 
             this.mongoose = mongoose.createConnection(config.db);
 
             mongoose.Promise = global.Promise;
 
-            this.mermaid.getDataByURI = mongoGetDataByURI.call(this);
+            app.mermaid.getDataByURI = mongoGetDataByURI(app);
 
-            this.configure(services);
+            services.call(this, app);
 
         }
     }
