@@ -12,8 +12,7 @@ module.exports = function(app) {
             default: 100,
             max: 100
         },
-        overwrite: false,
-        id : "uri"
+        overwrite: false
     }));
 
     // Get our initialize service to that we can bind hooks
