@@ -11,19 +11,27 @@ var mongoGetDataByURI = function(app) {
 
         var deferred = Q.defer();
 
-        app.service("/v1/meta").get(uri).then((data) => {
-
-            deferred.resolve(data);
-
-        }).catch((_) => {
-
-            if (mermaidGetter(uri)) {
-                var data = mermaidGetter(uri);
-                deferred.resolve(data);
-            } else {
-                deferred.reject("No data with that uri");
+        app.service("/v1/meta").find({
+            query: {
+                uri: uri
             }
-        })
+        }).then((meta) => {
+
+            if (meta.total > 0) {
+                deferred.resolve(meta.data[0]);
+            } else {
+                if (mermaidGetter(uri)) {
+                    var data = mermaidGetter(uri);
+                    deferred.resolve(data);
+                } else {
+                    deferred.reject("No data with that uri");
+                }
+            }
+
+        }).catch((err) => {
+            deferred.reject(err);
+
+        });
 
 
         return deferred.promise;
